@@ -1,18 +1,17 @@
 import pymysql.connector
 
 NOMBRE_DB = 'votacionesdb'
-HOST = ''
+HOST = 'localhost'
+PORT = 3306
+USER = 'root'
+PASSWORD = ''
 
-def main():
-    conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='', db=NOMBRE_DB)
+def conectar():
+    conn = pymysql.connect(host=HOST, port=PORT, user=USER, passwd=PASSWORD, db=NOMBRE_DB)
     cur = conn.cursor()
-    cur.execute("SELECT Host,User FROM user")
-    print(cur.description)
-    print()
-    for row in cur:
-        print(row)
+    return cur, conn
+
+
+def cerrar_conexion(cur, conn):
     cur.close()
     conn.close()
-
-if __name__ == "__main__":
-    main()
