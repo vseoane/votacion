@@ -1,4 +1,4 @@
-import pymysql.connector
+import pymysql
 
 NOMBRE_DB = 'votacionesdb'
 HOST = 'localhost'
