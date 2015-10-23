@@ -1,23 +1,19 @@
 from conexion import conexion
-import hashlib
-from interfaz import ventana_principal
+from hashlib import sha256
 from conexion import conexion
 
 def login(usr,psw):
     query = "SELECT `contrasena` FROM `usuarios_mesa` WHERE `cedula` = " + usr
     psw_db = run_query(query)
-    psw_hash1 = hashlib.sha256(psw).hexdigest()
-    print psw_hash1
-    print psw_db
+    psw_hash1 = sha256(psw).hexdigest()
 
     if psw_hash1 == psw_db:
-        #aca tenemos que llamar a ventana_principal.py
-        #esto es solo una prueba
-        print usr, psw
+        msg = ""
+        return (True, msg)
 
     else:
-         print "Usuario y/o contrasena no valida"
-         #llamar a ventana de login
+         msg = "Usuario y/o contrasena no valida"
+         return (False, msg)
 
 
 def run_query(query=''):
