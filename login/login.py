@@ -1,6 +1,6 @@
-from conexion import conexion
 from hashlib import sha256
 from conexion import conexion
+
 
 def login(usr,psw):
     query = "SELECT `contrasena` FROM `usuarios_mesa` WHERE `cedula` = " + usr
