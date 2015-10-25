@@ -3,11 +3,11 @@ import pymysql
 NOMBRE_DB = 'votacionesdb'
 HOST = 'localhost'
 PORT = 3306
-USER = 'root'
+USER = 'guest'
 PASSWORD = ''
 
-def conectar():
-    conn = pymysql.connect(host=HOST, port=PORT, user=USER, passwd=PASSWORD, db=NOMBRE_DB)
+def conectar(usr, passw):
+    conn = pymysql.connect(host=HOST,port=PORT,user=usr,passwd=passw,db=NOMBRE_DB)
     cur = conn.cursor()
     return cur, conn
 
