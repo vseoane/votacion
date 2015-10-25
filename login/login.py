@@ -16,11 +16,11 @@ def login(usr,psw):
          return (False, msg)
 
 
-def run_query(query=''):
-    cur, conn = conexion.conectar()
+def run_query(query=""):
+    cur, conn = conexion.conectar("guest","")
     cur.execute(query)          # Ejecutar una consulta
 
-    if query.upper().startswith('SELECT') or query.upper().startswith('REVOKE'):
+    if query.upper().startswith('SELECT'):
         data = ''.join(map(str, (cur.fetchone())))   # Traer los resultados de un select y quitar parentesis con join()
     else:
         conn.commit()              # Hacer efectiva la escritura de datos
