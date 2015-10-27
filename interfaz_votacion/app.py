@@ -1,5 +1,5 @@
 from flask import Flask, render_template, json, request, redirect, url_for, flash
-from login import login
+from login import login as loginator
 app = Flask(__name__)
 
 @app.route("/")
@@ -8,15 +8,13 @@ def main():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    print 'login'
     if request.method == 'GET':
         return render_template('index.html', next=request.args.get('next'))
     elif request.method == 'POST':
         username = request.form['inputName']
-        print username
         password = request.form['inputPassword']
-        print password
-        valid = login.login(username, password)
+        valid = loginator.login(username, password)
+        print valid
         if valid:
             return redirect(url_for('main'))
         else:
