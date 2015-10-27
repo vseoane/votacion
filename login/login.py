@@ -18,7 +18,8 @@ def login(usr,psw):
 
 def run_query(query=''):
     cur, conn = conexion.conectar()
-    cur.execute(query)          # Ejecutar una consulta
+    cur.execute(query)          # Ejec
+    # utar una consulta
 
     if query.upper().startswith('SELECT') or query.upper().startswith('REVOKE'):
         data = ''.join(map(str, (cur.fetchone())))   # Traer los resultados de un select y quitar parentesis con join()

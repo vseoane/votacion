@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json, request
+from flask import Flask, render_template, json, request, redirect, flash, url_for
 from login import login
 app = Flask(__name__)
 
@@ -14,13 +14,14 @@ def login():
         username = request.form['inputName']
         password = request.form['inputPassword']
         valid = login.login(username, password)
+        print(username)
         if valid:
             return redirect(url_for('main'))
         else:
             flash('Invalid login')
             return redirect(url_for('index'))
     else:
-        return abort(405)
+        return
 
 if __name__ == "__main__":
     app.run()

@@ -26,5 +26,3 @@ def contar_observados():
     results = {'candidato1' : result1, 'candidato2' : result2, 'en_blanco' : result3}
     return results
     cerrar_conexion(cur,conn)
-
-
