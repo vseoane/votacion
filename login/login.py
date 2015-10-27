@@ -16,6 +16,7 @@ def login(usr,psw):
          return (False, msg)
 
 
+
 def run_query(query=""):
     cur, conn = conexion.conectar("guest","")
     cur.execute(query)          # Ejecutar una consulta
