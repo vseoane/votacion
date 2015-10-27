@@ -14,12 +14,19 @@ def login():
         username = request.form['inputName']
         password = request.form['inputPassword']
         valid = loginator.login(username, password)
-        print valid
         if valid:
-            return redirect(url_for('main'))
+            return main_screen()
         else:
-            flash('Invalid login')
-            return redirect(url_for('index'))
+            #flash('Invalid login')
+            return index_screen()
+
+@app.route('/main', methods=['GET', 'POST'])
+def main_screen():
+    return render_template('main.html')
+
+@app.route('/index', methods=['GET', 'POST'])
+def index_screen():
+    return render_template('index.html')
 
 if __name__ == "__main__":
     app.run()
