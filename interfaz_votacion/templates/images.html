@@ -1,0 +1,21 @@
+<!doctype html>
+figures.html
+<html>
+<head>
+</head>
+<body>
+<div class="rawData">
+    <p>
+        Data Points:<br>
+        {% for i in y %}
+        {{ i }},
+        {% endfor %}
+    </p> </div>
+<div class='bokeh'>
+    {{ figDiv|safe }}
+</div>
+<div class='matplotlib'>
+    <img src="static/temp/{{plotPng}}">
+</div>
+</body>
+</html>
