@@ -1,6 +1,7 @@
-from flask import Flask, render_template, json, request, redirect, flash, url_for
-from login import login
+from flask import Flask, render_template, json, request, redirect, url_for, flash
+from login import login as loginator
 app = Flask(__name__)
+
 
 @app.route("/")
 def main():
@@ -13,15 +14,20 @@ def login():
     elif request.method == 'POST':
         username = request.form['inputName']
         password = request.form['inputPassword']
-        valid = login.login(username, password)
-        print(username)
+        valid = loginator.login(username, password)
         if valid:
-            return redirect(url_for('main'))
+            return main_screen()
         else:
-            flash('Invalid login')
-            return redirect(url_for('index'))
-    else:
-        return
+            #flash('Invalid login')
+            return index_screen()
+
+@app.route('/main', methods=['GET', 'POST'])
+def main_screen():
+    return render_template('main.html')
+
+@app.route('/index', methods=['GET', 'POST'])
+def index_screen():
+    return render_template('index.html')
 
 if __name__ == "__main__":
     app.run()
