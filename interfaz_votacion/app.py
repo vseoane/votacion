@@ -2,6 +2,7 @@ from flask import Flask, render_template, json, request, redirect, url_for, flas
 from login import login as loginator
 app = Flask(__name__)
 
+
 @app.route("/")
 def main():
     return render_template('index.html')
