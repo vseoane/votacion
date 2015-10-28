@@ -12,10 +12,10 @@ def login(usr,psw):
             return True
 
         else:
-            print "Usuario y/o contrasena no valida"
+            print ("Usuario y/o contrasena no valida")
             return False
     else: # ingreso caracteres que no son numeros
-        print "Debe ingresar una cedula valida"
+        print ("Debe ingresar una cedula valida")
         return False
 
 
