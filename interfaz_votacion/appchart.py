@@ -1,16 +1,63 @@
+import os
 from flask import Flask, render_template
+import random
+# imports for Bokeh plotting
+from bokeh.plotting import figure
+from bokeh.resources import CDN
+from bokeh.embed import file_html, components
+# imports for matplotlib plotting
+import tempfile
+import matplotlib
+matplotlib.use('Agg')  # this allows PNG plotting
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
-@app.route('/')
-@app.route('/chart')
-def index(chartID = 'chart_ID', chart_type = 'bar', chart_height = 350):
-	chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
-	series = [{"name": 'Label1', "data": [1,2,3]}, {"name": 'Label2', "data": [4, 5, 6]}]
-	title = {"text": 'My Title'}
-	xAxis = {"categories": ['xAxis Data1', 'xAxis Data2', 'xAxis Data3']}
-	yAxis = {"title": {"text": 'yAxis Label'}}
-	return render_template('index.html', chartID=chartID, chart=chart, series=series, title=title, xAxis=xAxis, yAxis=yAxis)
 
-if __name__ == "__main__":
-	app.run(debug = True, host='0.0.0.0', port=8080, passthrough_errors=True)
+@app.route('/')
+def indexPage():
+    # generate some random integers, sorted
+    exponent = .7 + random.random() * .6
+    dta = []
+    for i in range(50):
+        rnum = int((random.random() * 10) ** exponent)
+        dta.append(rnum)
+    y = sorted(dta)
+    x = range(len(y))
+    # generate Bokeh HTML elements
+    # create a `figure` object
+    p = figure(title='A Bokeh plot',
+               plot_width=500, plot_height=400)  # add the line
+    p.line(x, y)
+    # add axis labels
+    p.xaxis.axis_label = "Candidatos"
+    p.yaxis.axis_label = "Votos"
+    # create the HTML elements to pass to template
+    figJS,figDiv = components(p,CDN)
+    # generate matplotlib plot
+    fig = plt.figure(figsize=(5, 4), dpi=100)
+    axes = fig.add_subplot(1, 1, 1)
+    # plot the data
+    axes.plot(x, y, '-')
+    # labels
+    axes.set_xlabel('Candidatos')
+    axes.set_ylabel('Votos')
+    axes.set_title("Votos por candidato")  # make the temporary file
+    f = tempfile.NamedTemporaryFile(
+        dir=os.path.dirname(__file__)+'/static/temp',
+        suffix='.png', delete=False)
+    # save the figure to the temporary file
+    plt.savefig(f.name)
+    f.close()  # close the file
+    # get the file's name (rather than the whole path) # (the template will need that)
+    plotPng = f.name.split('/')[-1]
+    return (render_template(
+        'images.html',
+        y=y,
+        figJS=figJS, figDiv=figDiv,
+        plotPng=plotPng))
+
+
+if __name__ == '__main__':
+    app.debug = True
+    app.run()
