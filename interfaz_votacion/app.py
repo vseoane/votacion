@@ -58,15 +58,16 @@ def indexPage():
                plot_width=500, plot_height=400)  # add the line
     p.line(x, y)
     # add axis labels
-    p.xaxis.axis_label = "Candidatos"
-    p.yaxis.axis_label = "Votos"
+    # p.xaxis.axis_label = "Candidatos"
+    # p.yaxis.axis_label = "Votos"
     # create the HTML elements to pass to template
     figJS,figDiv = components(p,CDN)
     # generate matplotlib plot
     fig = plt.figure(figsize=(5, 4), dpi=100)
     axes = fig.add_subplot(1, 1, 1)
     # plot the data
-    axes.plot(x, y, '-')
+    #axes.plot(x, y, '-')
+    axes.bar(x, y)
     # labels
     axes.set_xlabel('Candidatos')
     axes.set_ylabel('Votos')
@@ -80,7 +81,7 @@ def indexPage():
     # get the file's name (rather than the whole path) # (the template will need that)
     plotPng = f.name.split('/')[-1]
     return (render_template(
-        'images.html',
+        'graficos.html',
         y=y,
         figJS=figJS, figDiv=figDiv,
         plotPng=plotPng))
