@@ -99,6 +99,49 @@ def verResultados():
         'resultados.html',
         y=y))
 
+@app.route('/resultados_completos')
+def verResultados_completos():
+    # generate some random integers, sorted
+    exponent = .7 + random.random() * .6
+    dta = []
+    for i in range(50):
+        rnum = int((random.random() * 10) ** exponent)
+        dta.append(rnum)
+    y = sorted(dta)
+    x = range(len(y))
+    # generate Bokeh HTML elements
+    # create a `figure` object
+    p = figure(title='A Bokeh plot',
+               plot_width=500, plot_height=400)  # add the line
+    p.line(x, y)
+    # add axis labels
+    p.xaxis.axis_label = "Candidatos"
+    p.yaxis.axis_label = "Votos"
+    # create the HTML elements to pass to template
+    figJS,figDiv = components(p,CDN)
+    # generate matplotlib plot
+    fig = plt.figure(figsize=(5, 4), dpi=100)
+    axes = fig.add_subplot(1, 1, 1)
+    # plot the data
+    axes.plot(x, y, '-')
+    # labels
+    axes.set_xlabel('Candidatos')
+    axes.set_ylabel('Votos')
+    axes.set_title("Votos por candidato")  # make the temporary file
+    f = tempfile.NamedTemporaryFile(
+        dir=os.path.dirname(__file__)+'/static/temp',
+        suffix='.png', delete=False)
+    # save the figure to the temporary file
+    plt.savefig(f.name)
+    f.close()  # close the file
+    # get the file's name (rather than the whole path) # (the template will need that)
+    plotPng = f.name.split('/')[-1]
+    return (render_template(
+        'resultados_completos.html',
+        y=y,
+        figJS=figJS, figDiv=figDiv,
+        plotPng=plotPng))
+
 
 if __name__ == "__main__":
     app.run()
