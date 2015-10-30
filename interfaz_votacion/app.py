@@ -14,7 +14,7 @@ matplotlib.use('Agg')  # this allows PNG plotting
 import matplotlib.pyplot as plt
 
 app = Flask(__name__)
-
+user = None
 
 @app.route("/")
 def main():
@@ -29,6 +29,7 @@ def login():
         password = request.form['inputPassword']
         valid = loginator.login(username, password)
         if valid:
+            user = username
             return main_screen()
         else:
             #flash('Invalid login')
@@ -36,14 +37,20 @@ def login():
 
 @app.route('/main', methods=['GET', 'POST'])
 def main_screen():
+    if user == None:
+        return render_template('index.html')
     return render_template('main.html')
 
 @app.route('/index', methods=['GET', 'POST'])
 def index_screen():
+    if user == None:
+        return render_template('index.html')
     return render_template('index.html')
 
 @app.route('/graficos')
 def indexPage():
+    if user == None:
+        return render_template('index.html')
     # generate some random integers, sorted
     exponent = .7 + random.random() * .6
     dta = []
@@ -88,6 +95,8 @@ def indexPage():
 
 @app.route('/resultados')
 def verResultados():
+    if user == None:
+        return render_template('index.html')
     # generate some random integers, sorted
     exponent = .7 + random.random() * .6
     dta = []
@@ -102,6 +111,8 @@ def verResultados():
 
 @app.route('/resultados_completos')
 def verResultados_completos():
+    if user == None:
+        return render_template('index.html')
     # generate some random integers, sorted
     exponent = .7 + random.random() * .6
     dta = []
