@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/graficas')
 def indexPage():
     # generate some random integers, sorted
     exponent = .7 + random.random() * .6
