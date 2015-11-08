@@ -12,8 +12,8 @@ def obtener_hora_NTP():
 
 def hora():
     c = ntplib.NTPClient()
-    response = c.request('127.0.0.1')
-    hora = datetime.datetime.fromtimestamp(response.tx_timestamp)
+    response = c.request('localhost')
+    hora = datetime.datetime.fromtimestamp(response.tx_time)
     hora_final = datetime.datetime(year=hora.year,month=hora.month,day=hora.day,hour=hora.hour,minute=hora.minute,second=hora.second)
     return hora_final
 

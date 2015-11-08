@@ -6,14 +6,14 @@ import ntp
 
 def make_only_read():
     cur, conn = conexion.conectar('root','')
-    query= "REVOKE ALL PRIVILEGES ON `votacionesdb`.* FROM 'guest'@'localhost'; GRANT SELECT ON `votacionesdb`.* TO 'guest'@'localhost';"
+    query= "REVOKE ALL PRIVILEGES ON `votacionesDB`.* FROM 'guest'@'localhost'; GRANT SELECT ON `votacionesDB`.* TO 'guest'@'localhost';"
     cur.execute(query)          # Ejecutar una consulta
     conexion.cerrar_conexion(cur,conn)
     print "Mesa cerrada con exito"
 
 
 def hora_cierre():
-    hora_actual = datetime.datetime(2015,11,07,hour=12,minute=10,second=0)
+    hora_actual = datetime.datetime(2015,11,8,hour=00,minute=10,second=0)
 
     return hora_actual
 
