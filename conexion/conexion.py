@@ -1,6 +1,6 @@
 import pymysql
 
-NOMBRE_DB = 'votacionesdb'
+NOMBRE_DB = 'votacionesDB'
 HOST = '127.0.0.1'
 PORT = 3306
 USER = 'guest'
