@@ -1,5 +1,5 @@
 from flask import Flask, render_template, json, request, redirect, url_for, flash
-from login import login as loginator
+from votacion.login import login as loginator
 import os
 from flask import Flask, render_template
 import random
